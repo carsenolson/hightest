@@ -25,9 +25,9 @@ class Test():
             self.questions = parsedTest["questions"] 
             fd.close()
         return self
-    # **kwards if selection - answers=[], true_answers=[]  
-    #           else own_answer - answer
-    def add_question(self, question_title, question_type="selection", images=[], **kwards):
+    
+    # **kwards presents all question fields  
+    def add_question(self, **kwards):
         if question_type == "selection":  
             self.questions.append({"question_type": question_type, 
                 "question_title": question_title, "answers": kwards.answers, 
@@ -36,9 +36,23 @@ class Test():
             self.questions.append({"question_type": question_type, 
                 "question_title": question_title, "question_answer": kwards.answer, 
                 "images": images})
+     
+    # **kwards presents all question fields  
+    def update_question(self, question_index, **kwards):
+        if question_type == "selection":  
+            self.questions[question_index] = {"question_type": question_type, 
+                "question_title": question_title, "answers": kwards.answers, 
+                "true_answers": kwards.true_answers, "images": images}
+        else:
+            self.questions[question_index] = {"question_type": question_type, 
+                "question_title": question_title, "question_answer": kwards.answer, 
+                "images": images}
  
     def get_question(self, question_index): 
         return self.questions[question_index]         
+    
+    def delete_question(self, question_index):
+        del(self.questions[question_index])
     
     # **kwards have attribute/s to update in a specific question    
     def update_question(self, question_index, **kwards):
