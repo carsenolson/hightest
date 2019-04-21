@@ -1,9 +1,27 @@
-hightest - is a complex program for creating tests for students.
+#	Hightest 
 
-there are tho types of servers:
-	1. test_creator server -> this server starts http_server on localhost:3000
-		with special web interface for creating tests (this server should be used by
-		teachers or test_creators, not by students, because this server decrypt test's
-		data)  
-	2. test_server -> this server starts http_server on localhost:3000 with test 
-		interface, this server is created for students.
+Two local servers which provide web-interface for creating and complete tests. (In development) 
+
+### Installing
+ 
+You need just python3.6 (not tested in 3.5 etc) 
+
+Installation debain/ubuntu users 
+```
+sudo apt-get install python3
+```
+
+## Run the program
+
+Test_creator doesn't use foreign libraries, so you can: 
+
+```
+cd test_creator
+pyton3 test_creator.py
+```
+
+To see the development result, get:
+
+```
+http://localhost:8080/
+```  
