@@ -1,5 +1,18 @@
 from string import Template
 
+
+head = Template(
+        '''
+            <!DOCTYPE html>
+            <html>
+                <head> 
+                    <meta charset="utf-8">   
+                    <link rel="stylesheet" type="text/css" href="$static_path/style.css"> 
+                </head> 
+                <body> 
+                    <h3>$page_name </h3>  
+        '''
+        )
 test_list = Template('''<a href="/$test_name/">$test_name</a><br>''')
 
 question_list = Template(
@@ -27,10 +40,13 @@ own_answer_question_form = Template(
             '''
             <div>
                 <form action="/$test_name/questoins" method="post"> 
-                    <input type="text" name="question_title" placeholder="question title"><br>
-                    <input type="text" name="answer" placeholder="answer"><br> 
-                    <input type="file" name="image" placeholder="add image"><br> 
-                </form> 
-            </div>
+                    <input type="text" name="question_title" placeholder="question title"><br> <input type="text" name="answer" placeholder="answer"><br> <input type="file" name="image" placeholder="add image"><br> </form> </div>
+            ''' 
+        )
+
+footer = Template(
+            '''
+                    <script src="$static_path/main.js"> 
+                </body> 
             ''' 
         )

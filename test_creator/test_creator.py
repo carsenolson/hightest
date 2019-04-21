@@ -15,7 +15,7 @@ def index(rw):
     tests = Test.getAllTests(config.test_path)     
     for test in tests:
         if test.endswith(".json"):
-            rw.write(bytes(templates.test_list.safe_substitute(test_name=test), encoding="utf-8")) 
+            rw.write(bytes(templates.test_list.safe_substitute(test_name=test.rstrip(".json")), encoding="utf-8")) 
 
 def test(rw):
     pass
@@ -34,8 +34,6 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/html")
         self.end_headers()
         self.wfile.write(b"<p>You accessed path: %s</p>" % bytes(self.path, encoding="utf-8"))
-        if self.path == "" or self.path == "/":
-            index(self.wfile)
 
     def do_POST(self):
         self.send_response(200)
