@@ -1,16 +1,23 @@
 from string import Template
 
 
+# There is no support for static files, 
+# so you have to write your styles and js stuff right here :) 
+
 nav = Template(
         '''
             <!DOCTYPE html>
-            <html>
                 <head> 
                     <meta charset="utf-8">   
-                    <link rel="stylesheet" type="text/css" href="$static_path/style.css"> 
-                </head> 
-                <body> 
-                    <h3>$page_name </h3>  
+                    <style>
+                        body {
+                            background: #eaeaea;
+                            margin: 0;
+                            padding: 0;
+                        }
+                    </style>
+                </head>    
+                    <h3>$page_name</h3>  
         '''
         )
 test_list = Template('''<a href="/$test_name/">$test_name</a><br>''')
@@ -18,7 +25,7 @@ test_list = Template('''<a href="/$test_name/">$test_name</a><br>''')
 question_list = Template(
             ''' 
             <div class="question">
-                <a href="/$test_name/questions">$question_title</a>
+                <a href="/$test_name/$question_index">question: $question_title...</a>
             </div>
             '''
         )
@@ -47,12 +54,11 @@ own_answer_question_form = Template(
 footer = Template(
             '''
                     <script src="$static_path/main.js"> 
-                </body> 
             ''' 
         )
 
 new_test_form =  '''
-                <form method="post"> 
+                <form method="POST"> 
                     <input type="text" name="test_name" placeholder="test name">
                     <input type="submit" value="create test"> 
                 </form> 

@@ -30,6 +30,12 @@ class Test():
             fd.close()
         return self
     
+    def update_time(time):
+        self.time = time
+    
+    def update_name(name):
+        self.name = name
+    
     # **kwards presents all question fields  
     def add_question(self, **kwards):
         if question_type == "selection":  
