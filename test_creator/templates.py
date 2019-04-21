@@ -1,7 +1,7 @@
 from string import Template
 
 
-head = Template(
+nav = Template(
         '''
             <!DOCTYPE html>
             <html>
@@ -50,3 +50,12 @@ footer = Template(
                 </body> 
             ''' 
         )
+
+new_test_form =  '''
+                <form method="post"> 
+                    <input type="text" name="test_name" placeholder="test name">
+                    <input type="submit" value="create test"> 
+                </form> 
+            '''
+
+add_question_link = Template('''<a href="/$test_name/$questoin_index">  </a> ''')  

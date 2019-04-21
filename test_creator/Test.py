@@ -2,7 +2,11 @@ import json
 import os
 
 def getAllTests(path):
-    return os.listdir(path)  
+    tests = [] 
+    for f in os.listdir(path):  
+        if f.endswith(".json"):
+            tests.append(f.rstrip(".json"))    
+    return tests
 
 class Test():
     def __init__(self, name, time=20): 
