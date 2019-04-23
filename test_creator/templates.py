@@ -27,6 +27,7 @@ question_list = Template(
             ''' 
             <div class="question">
                 <a href="/$test_name/$question_index">$question_index -> $question_title...</a>
+                <a href="/$test_name/$question_index/delete">delete</a>
             </div>
             '''
         )

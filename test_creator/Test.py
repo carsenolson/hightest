@@ -22,11 +22,12 @@ class Test():
     
     @classmethod 
     def getTestFromFile(self, path):
-        with open(path, "r+") as fd:  
+        with open(path, "w+", encoding="utf-8") as fd:  
             parsedTest = json.loads(fd.read())
             self.name = parsedTest["name"]  
             self.time = parsedTest["time"]
             self.questions = parsedTest["questions"] 
+            print("PARSED JSON: ", parsedJSON)  
             fd.close()
         return self
     
@@ -38,25 +39,14 @@ class Test():
     
     # **kwards presents all question fields  
     def add_question(self, **kwards):
-        if question_type == "selection":  
-            self.questions.append({"question_type": question_type, 
-                "question_title": question_title, "answers": kwards.answers, 
-                "true_answers": kwards.true_answers, "images": images})
-        else:
-            self.questions.append({"question_type": question_type, 
-                "question_title": question_title, "question_answer": kwards.answer, 
-                "images": images})
-     
+        self.questions.append({"question_title": kwards["question_title"], "answers": kwards["answers"], 
+            "true_answers": kwards["true_answers"]})
+        print("after append: ", self.questions) 
+    
     # **kwards presents all question fields  
     def update_question(self, question_index, **kwards):
-        if question_type == "selection":  
-            self.questions[question_index] = {"question_type": question_type, 
-                "question_title": question_title, "answers": kwards.answers, 
-                "true_answers": kwards.true_answers, "images": images}
-        else:
-            self.questions[question_index] = {"question_type": question_type, 
-                "question_title": question_title, "question_answer": kwards.answer, 
-                "images": images}
+        self.questions[question_index] = {"question_title": kwards["question_title"], "answers": kwards["answers"], 
+                "true_answers": kwards["true_answers"]}
  
     def get_question(self, question_index): 
         return self.questions[question_index]         
@@ -67,10 +57,10 @@ class Test():
     # **kwards have attribute/s to update in a specific question    
     def update_question(self, question_index, **kwards):
         for key in kwards.keys():
-            self.questions[question_index][key] = kwards[key] 
+            self.questions[int(question_index)][key] = kwards[key] 
     
-    def saveTest(self, test_path):
-        with open(os.path.join(test_path,self.name+".json"), "r+") as fd:
+    def save(self, test_path):
+        with open(os.path.join(test_path,self.name+".json"), "w+") as fd:
             fd.write(json.dumps({"name": self.name, "time": self.time, 
                 "questions": self.questions}))
             fd.close() 

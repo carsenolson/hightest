@@ -9,10 +9,12 @@ import http.server
 from string import Template
 
 config = Config.Config()
-current_test = Test.Test("yey") # global variable for test 'caching' 
+current_test = None # global variable for test 'caching' 
 tests = Test.getAllTests(config.test_path)
 
 # absolutely unreadable code using only string template
+
+# something wrond with writer and reader tests 
 class MainHandler(http.server.BaseHTTPRequestHandler):
     def do_HEAD(self):
         self.send_response(200)
@@ -86,11 +88,11 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
     def test_lookup(self):
         global current_test
         for test_name in tests:
+            print("test name: ", test_name) 
             if test_name == self.path_list[0]:
-                current_test = Test.Test.getTestFromFile(os.path.join(config.test_path,
-                    test_name+".json"))
-            else:
-                current_test = Test.Test(self.path_list[0])
+                current_test = Test.Test.getTestFromFile(os.path.join(config.test_path, test_name)+".json")
+        current_test = Test.Test(self.path_list[0])
+    
     def delete_question(self):
         if current_test == None or current_test.name != self.path_list[0]:
             self.test_lookup()
@@ -101,10 +103,12 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
     def test(self):
         self.send_ok() 
         print("test_files", tests) 
-        self.wfile.write(bytes(templates.nav.safe_substitute(
-            page_name="test name: "+self.path_list[0],
+        self.wfile.write(bytes(templates.nav.safe_substitute(page_name="test name: "+self.path_list[0], 
             static_path=config.static_path), encoding="utf-8"))   
-        self.test_lookup() 
+        if current_test == None or current_test.name != self.path_list[0]:
+            self.test_lookup()
+        print("test from test view: ", current_test) 
+        print("questions from test view: ", current_test.questions) 
         if not current_test.questions:
             self.wfile.write(b"<h3>There is no questions</h3><br>") 
         else:  
@@ -138,17 +142,22 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         return answers.split(";")
     def question(self):
         if self.method == "POST":
-            self.test_lookup() 
+            if current_test == None or current_test.name != self.path_list[0]: 
+                self.test_lookup() 
             postvars = self.get_post_data() 
-            question_title = self.answers_to_list(postvars[b"question_title"][0].decode("utf-8")) 
             answers = self.answers_to_list(postvars[b"answers"][0].decode("utf-8")) 
             true_answers = self.answers_to_list(postvars[b"true_answers"][0].decode("utf-8")) 
             print("test name: ", current_test.name) 
             print("post data from question: ", postvars) 
             if self.question_in_questions():
-                current_test.update_question(self.path_list[1], question_title=question_title, answers=answers, true_answers=true_answers)
+                current_test.update_question(self.path_list[1], 
+                        question_title=postvars[b"question_title"][0].decode("utf-8"), 
+                        answers=answers, true_answers=true_answers)
             else: 
-                current_test.add_question(  question_title=question_title, answers=answers, true_answers=true_answers)
+                current_test.add_question(question_title=postvars[b"question_title"][0].decode("utf-8"), 
+                        answers=answers, true_answers=true_answers)
+            current_test.save(config.test_path) 
+            print(current_test.questions) 
             self.redirect("/"+current_test.name+"/") 
         if self.method == "GET":
             self.send_ok() 
@@ -156,6 +165,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             if current_test == None or current_test.name != self.path_list[0]:
                 self.test_lookup()
             self.wfile.write(bytes(templates.nav.substitute(page_name="you are editing question of test: "+current_test.name), encoding="utf-8"))   
+            print("questions: ", current_test.questions) 
             cq = int(self.path_list[1]) 
             if self.question_in_questions():  
                 answers = self.answers_to_text("answers", cq) 
@@ -167,7 +177,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
                     ),encoding="utf-8")) 
                    
             else:
-                self.wfile.write(bytes(templates.question_form.substitute(), encoding="utf-8")) 
+                self.wfile.write(bytes(templates.empty_question_form, encoding="utf-8")) 
 def main():
     httpd = http.server.HTTPServer(("", 8080), MainHandler)
     try:
