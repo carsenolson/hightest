@@ -65,7 +65,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         elif len(self.path_list) == 2:
             self.question() 
         #there is no anoter they to handle, return 404     
-        elif len(self.path_list) == 3 and self.path_list == "delete":
+        elif len(self.path_list) == 3 and self.path_list[2] == "delete":
             self.delete_question() 
         else:
             self.wfile.write(b"404 not found<br>Usage: /test_name/int:question_index")  
@@ -86,18 +86,20 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(templates.new_test_form, encoding="utf-8")) 
            
     def test_lookup(self):
+        print("TEST LOOKING UP") 
         global current_test
+        current_test = Test.Test(self.path_list[0])
         for test_name in tests:
             print("test name: ", test_name) 
             if test_name == self.path_list[0]:
-                current_test = Test.Test.getTestFromFile(os.path.join(config.test_path, test_name)+".json")
-        current_test = Test.Test(self.path_list[0])
-    
+                current_test = Test.Test("").getTestFromFile(os.path.join(config.test_path, test_name)+".json")
+            
     def delete_question(self):
+        print("deleting qustion: ", self.path_list[1], self.path_list[2]) 
         if current_test == None or current_test.name != self.path_list[0]:
             self.test_lookup()
         current_test.delete_question(int(self.path_list[1]))
-        current_test.saveTest(config.test_path)
+        current_test.save(config.test_path)
         self.redirect("/"+current_test.name+"/") 
 
     def test(self):
@@ -107,8 +109,6 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             static_path=config.static_path), encoding="utf-8"))   
         if current_test == None or current_test.name != self.path_list[0]:
             self.test_lookup()
-        print("test from test view: ", current_test) 
-        print("questions from test view: ", current_test.questions) 
         if not current_test.questions:
             self.wfile.write(b"<h3>There is no questions</h3><br>") 
         else:  

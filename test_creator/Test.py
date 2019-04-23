@@ -5,7 +5,7 @@ def getAllTests(path):
     tests = [] 
     for f in os.listdir(path):  
         if f.endswith(".json"):
-            tests.append(f.rstrip(".json"))    
+            tests.append(f.replace(".json", ""))    
     return tests
 
 class Test():
@@ -14,22 +14,15 @@ class Test():
         self.time = time 
         self.questions = [] 
     
-    @classmethod
-    def newTest(self, name, time=20):
-        self.name = name
-        self.time = time
-        return self 
-    
-    @classmethod 
     def getTestFromFile(self, path):
-        with open(path, "w+", encoding="utf-8") as fd:  
+        with open(path, "r+") as fd:  
             parsedTest = json.loads(fd.read())
             self.name = parsedTest["name"]  
             self.time = parsedTest["time"]
             self.questions = parsedTest["questions"] 
-            print("PARSED JSON: ", parsedJSON)  
+            print("PARSED JSON: ", parsedTest)  
             fd.close()
-        return self
+        return self 
     
     def update_time(time):
         self.time = time
