@@ -25,7 +25,7 @@ test_list = Template('''<a href="/$test_name/">$test_name</a><br>''')
 question_list = Template(
             ''' 
             <div class="question">
-                <a href="/$test_name/$question_index">question: $question_title...</a>
+                <a href="/$test_name/$question_index">$question_index -> $question_title...</a>
             </div>
             '''
         )
@@ -51,11 +51,7 @@ own_answer_question_form = Template(
             ''' 
         )
 
-footer = Template(
-            '''
-                    <script src="$static_path/main.js"> 
-            ''' 
-        )
+add_new_question_link = Template('''<a href="/$test_name/$question_index">add new question</a>''')
 
 new_test_form =  '''
                 <form method="POST"> 

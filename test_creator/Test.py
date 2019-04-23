@@ -24,7 +24,7 @@ class Test():
     def getTestFromFile(self, path):
         with open(path, "r+") as fd:  
             parsedTest = json.loads(fd.read())
-            self.name = parsedTest["test_name"]  
+            self.name = parsedTest["name"]  
             self.time = parsedTest["time"]
             self.questions = parsedTest["questions"] 
             fd.close()
@@ -71,6 +71,6 @@ class Test():
     
     def saveTest(self, test_path):
         with open(os.path.join(test_path,self.name+".json"), "r+") as fd:
-            fd.write(json.dumps({"test_name": self.name, "time": self.time, 
+            fd.write(json.dumps({"name": self.name, "time": self.time, 
                 "questions": self.questions}))
             fd.close() 
