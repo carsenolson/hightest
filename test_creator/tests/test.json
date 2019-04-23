@@ -3,18 +3,15 @@
 	"time": 20,
 	"questions": [
 		{
-			"question_type": "selection", 
 			"question_title": "what do you think about this?",
 			"answers": ["it's primary good", "who wrote this shit?"],
-			"true_answers": [1],    
-			"images": ["tests/test.png"]  
+			"true_answers": [1]    
 		},
 		{
-			"question_type": "own_answer",
 			"question_title": "this question is made for letting you write your own annser, what would you write?",
-			"question_answer": "I've never met kinda this before, but who'll be check this out?",
-			"images": ["tests/test.png", "tests/test.png"] 
-		 }
+			"answers": ["I've never met kinda this before","but who'll be check this out?"],
+			"true_answers": [0]	 
+		}
 
 	]			
 }

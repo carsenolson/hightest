@@ -17,6 +17,7 @@ nav = Template(
                         }
                     </style>
                 </head>    
+                    <a href="/">Go to home</a><hr> 
                     <h3>$page_name</h3>  
         '''
         )
@@ -30,27 +31,27 @@ question_list = Template(
             '''
         )
 
-selection_question_form = Template(
+question_form = Template(
             '''
-            <div>
-                <form action="/$test_name/questoins" method="post"> 
-                    <input type="text" name="question_title" placeholder="question title"><br>
-                    <input type="text" name="answer" placeholder="answer"><br> 
-                    <input type="file" name="image" placeholder="add image"><br> 
-                    <input type="text" name="true_answers" placeholder="write numbers of true answers split them by comma">  
+                <form method="post"> 
+                    <input type="text" name="question_title" placeholder="question title" value="$question_title"><br>
+                    <input type="text" name="answers" placeholder="answers (answer;answer)" value="$answers"><br> 
+                    <input type="text" name="true_answers" placeholder="true answers (0;2) " value="$true_answers"><br> 
+                    <input type="submit" value="add"> 
                 </form> 
-            </div>
             ''' 
         )
 
-own_answer_question_form = Template(
+empty_question_form = '''
+
+                <form  method="post"> 
+                    <input type="text" name="question_title" placeholder="question title" ><br>
+                    <input type="text" name="answers" placeholder="answers (answer;answer)" ><br> 
+                    <input type="text" name="true_answers" placeholder="true answers (0;2) " ><br> 
+                    <input type="submit" value="add"> 
+                </form> 
+
             '''
-            <div>
-                <form action="/$test_name/questoins" method="post"> 
-                    <input type="text" name="question_title" placeholder="question title"><br> <input type="text" name="answer" placeholder="answer"><br> <input type="file" name="image" placeholder="add image"><br> </form> </div>
-            ''' 
-        )
-
 add_new_question_link = Template('''<a href="/$test_name/$question_index">add new question</a>''')
 
 new_test_form =  '''
