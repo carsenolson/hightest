@@ -69,6 +69,8 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes(templates.test_option.safe_substitute(test_name=test_name), encoding="utf-8")) 
         self.wfile.write(bytes(templates.end_students_name_form, encoding="utf-8")) 
     
+    def show_nav1(self):
+        self.wfile.write(bytes(templates.nav1, encoding="utf-8"))
     def index(self):
         if self.method == "POST":
             global current_test, result 
@@ -83,6 +85,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             #when we got post data about test and student, we start testing 
         elif self.method == "GET": 
             self.send_ok()   
+            self.show_nav1() 
             self.show_student_form() 
     
     def show_test(self):
@@ -106,10 +109,12 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             self.redirect("save") 
         if self.method == "GET":
             self.send_ok() 
+            self.show_nav1() 
             self.show_test() 
     
     def save(self):
         self.send_ok() 
+        self.show_nav1() 
         self.wfile.write(b"Wow! You have completed the test!")  
     
     def answers_to_list(self, answers):

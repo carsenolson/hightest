@@ -65,6 +65,18 @@ add_question_link = Template('''<a href="/$test_name/$questoin_index">  </a> '''
 
 # These templates created for test_server.py!
 
+nav1 = '''
+        <!DOCTYPE html>
+        <head>
+            <meta charset="utf-8">
+            <style>
+                body{
+                    background: #fff; 
+                }
+            </style>
+        </head>
+        '''
+
 students_name_form = '''
                     <form method="post" id="student_form">
                         <input type="text" name="student_name" placeholder="your name"> 
@@ -84,3 +96,5 @@ end_form = '''
                     <input type="submit" value="okay"> 
                 </form>  
             '''
+
+
