@@ -16,7 +16,7 @@ sudo apt-get install python3
 Test_creator doesn't use foreign libraries, so you can: 
 
 ```
-pyton3 test_creator.py
+python3 test_creator.py
 ```
 Everything hosting on `localhost:8080`
 
