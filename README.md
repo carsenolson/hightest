@@ -16,7 +16,6 @@ sudo apt-get install python3
 Test_creator doesn't use foreign libraries, so you can: 
 
 ```
-cd test_creator
 pyton3 test_creator.py
 ```
 
