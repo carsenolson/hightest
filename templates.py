@@ -8,29 +8,62 @@ nav = Template(
         '''
             <!DOCTYPE html>
                 <head> 
-                    <meta charset="utf-8">   <style>
+                    <meta charset="utf-8">   
+                    <style>
                         body {
-                            background: #eaeaea;
+                            background: #fff;
                             margin: 0;
                             padding: 0;
                         }
+                        a {
+                            text-decoration: none;
+                            margin: 0px 10px; 
+                            padding: 10px; 
+                        }
+                        a:hover {
+                            text-decoration: underline;
+                        }
+                        .question {
+                            width:280px;
+                            height:40px;
+                            background: #eee; 
+                            border: 1px solid #ccc; 
+                        }
+                        
+                        input[type=text] {
+                            width: 50%;
+                            padding: 12px 20px;
+                            margin: 8px 0;
+                            box-sizing: border-box;
+                        } 
+                        input[type=button], input[type=submit], input[type=reset] {
+                            background-color: #4CAF50;
+                            border: none;
+                            color: white;
+                            padding: 16px 32px;
+                            text-decoration: none;
+                            margin: 4px 2px;
+                            cursor: pointer;
+                        }     
+                        h2 {
+                            margin: 10px;
+                        }
                     </style>
                 </head>    
-                    <a href="/">Go to home</a><hr> 
+                    <a href="/"><h1>Go to home</h1></a><hr> 
                     <h3>$page_name</h3>  
         '''
         )
-test_list = Template('''<a href="/$test_name/">$test_name</a><br>''')
+test_list = Template('''<a href="/$test_name/"><h2>$test_name</h2></a><br>''')
 
 question_list = Template(
             ''' 
             <div class="question">
                 <a href="/$test_name/$question_index">$question_index -> $question_title...</a>
-                <a href="/$test_name/$question_index/delete">delete</a>
+                <a href="/$test_name/$question_index/delete" style="color:red">delete</a>
             </div>
             '''
         )
-
 question_form = Template(
             '''
                 <form method="post"> 
@@ -70,10 +103,51 @@ nav1 = '''
         <head>
             <meta charset="utf-8">
             <style>
-                body{
-                    background: #fff; 
-                }
-            </style>
+                        body {
+                            background: #fff;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        a {
+                            text-decoration: none;
+                            margin: 0px 10px; 
+                            padding: 10px; 
+                        }
+                        a:hover {
+                            text-decoration: underline;
+                        }
+                        .question {
+                            width:280px;
+                            height:40px;
+                            background: #eee; 
+                            border: 1px solid #ccc; 
+                        }
+                        select {
+                            width: 50%;
+                            padding: 16px 20px;
+                            border: none;
+                            border-radius: 4px;
+                            background-color: #f1f1f1;
+                        } 
+                        input[type=text] {
+                            width: 50%;
+                            padding: 12px 20px;
+                            margin: 8px 0;
+                            box-sizing: border-box;
+                        } 
+                        input[type=button], input[type=submit], input[type=reset] {
+                            background-color: #4CAF50;
+                            border: none;
+                            color: white;
+                            padding: 16px 32px;
+                            text-decoration: none;
+                            margin: 4px 2px;
+                            cursor: pointer;
+                        }     
+                        h2 {
+                            margin: 10px;
+                        }
+                    </style>
         </head>
         '''
 

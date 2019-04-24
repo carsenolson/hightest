@@ -71,6 +71,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
     
     def show_nav1(self):
         self.wfile.write(bytes(templates.nav1, encoding="utf-8"))
+    
     def index(self):
         if self.method == "POST":
             global current_test, result 
