@@ -26,4 +26,4 @@ After creating some tests - terminate test_creator server and launch test_server
 python3 test_server.py
 ```
 
-After creating and compliting tests you may see results and tests in directories `./tests && ./results`
+After creating and completing tests you may see results and tests in directories `./tests && ./results`
