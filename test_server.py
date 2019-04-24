@@ -11,7 +11,8 @@ import Result
 config = Config.Config()
 current_test = None # global variable for test 'caching' 
 tests = Test.getAllTests(config.test_path)
-result = None 
+result = None
+results = []
 
 class MainHandler(http.server.BaseHTTPRequestHandler):
     def do_HEAD(self):
@@ -68,6 +69,11 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
         for test_name in tests:
             self.wfile.write(bytes(templates.test_option.safe_substitute(test_name=test_name), encoding="utf-8")) 
         self.wfile.write(bytes(templates.end_students_name_form, encoding="utf-8")) 
+   
+    def show_non_empty_student_form(self, student_name, student_group, test_name_selected):
+        self.wfile.write(bytes(templates.non_empty_students_name_form.safe_substitute(
+            student_name=student_name, student_group=student_group, test_name=test_name_selected), encoding="utf-8"))
+        self.wfile.write(bytes(templates.end_students_name_form, encoding="utf-8"))  
     
     def show_nav1(self):
         self.wfile.write(bytes(templates.nav1, encoding="utf-8"))
@@ -81,9 +87,10 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
             group = postvars[b"student_group"][0].decode("utf-8")
             test_name =  postvars[b"test_name"][0].decode("utf-8")
             current_test = Test.Test("").getTestFromFile(os.path.join(config.test_path, test_name)+".json")
-            result = Result.Result(name=name, student_group=group, test_name=test_name) 
-            self.redirect("testing") 
-            #when we got post data about test and student, we start testing 
+            self.send_ok() 
+            self.show_nav1() 
+            self.show_non_empty_student_form(name, group, test_name)   
+            self.show_test() 
         elif self.method == "GET": 
             self.send_ok()   
             self.show_nav1() 
@@ -102,16 +109,17 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
     
     def testing(self):
         if self.method == "POST":
-            postvars = self.get_post_data() 
-            print(postvars) 
+            global result 
+            postvars = self.get_post_data()  
+            name = postvars[b"student_name"][0].decode("utf-8")
+            group = postvars[b"student_group"][0].decode("utf-8")
+            test_name =  postvars[b"test_name"][0].decode("utf-8")
+            result = Result.Result(name=name, student_group=group, test_name=test_name) 
             for answer in postvars[b"answers"]:
                 result.answers.append(self.answers_to_list(answer.decode("utf-8")))
             result.save(config.results_path) 
+            result = None 
             self.redirect("save") 
-        if self.method == "GET":
-            self.send_ok() 
-            self.show_nav1() 
-            self.show_test() 
     
     def save(self):
         self.send_ok() 

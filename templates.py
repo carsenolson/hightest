@@ -152,23 +152,28 @@ nav1 = '''
         '''
 
 students_name_form = '''
-                    <form method="post" id="student_form">
+                   <form method="post" id="student_form">
                         <input type="text" name="student_name" placeholder="your name"> 
                         <input type="text" name="student_group" placeholder="your group"> 
                         <input type="submit">
                     </form>
                     <select name="test_name" form="student_form">
-                    '''
+            '''
+non_empty_students_name_form = Template('''
+        <form action="testing" method="post" id="student_form">
+            <input type="text" name="student_name" value="$student_name" readonly="readonly"> 
+            <input type="text" name="student_group" value="$student_group" readonly="readonly"> 
+            <input type="text" name="test_name" value="$test_name" readonly="readonly"> 
+        </form>
+        ''')
+
 test_option = Template('''<option value="$test_name">$test_name</option>''')
 end_students_name_form = '''</select>'''
 
 start_form = '''<form method="post">'''
 question_title_h3 = Template('''<h3>$question_title</h3>''')
 question_answer = Template('''<p>$question_answer</p>''')
-input_answer = '''<input type="texd" name="answers" placeholder="enter your answers (0;2)">'''
-end_form = '''
-                    <input type="submit" value="okay"> 
-                </form>  
-            '''
+input_answer = '''<input type="texd" name="answers" placeholder="enter your answers (0;2)" form="student_form">'''
+end_form = '''<input type="submit" value="okay" form="student_form"> '''
 
 
