@@ -11,8 +11,9 @@ nav = Template(
                     <meta charset="utf-8">   
                     <style>
                         body {
+                            width: 80%; 
                             background: #fff;
-                            margin: 0;
+                            margin: 30px auto;
                             padding: 0;
                         }
                         a {
@@ -24,14 +25,15 @@ nav = Template(
                             text-decoration: underline;
                         }
                         .question {
-                            width:280px;
+                            width:80%;
                             height:40px;
-                            background: #eee; 
-                            border: 1px solid #ccc; 
+                            border-bottom: 1px solid #ccc; 
                         }
-                        
+                        #delete {
+                            float: right
+                        }
                         input[type=text] {
-                            width: 50%;
+                            width: 80%;
                             padding: 12px 20px;
                             margin: 8px 0;
                             box-sizing: border-box;
@@ -60,7 +62,7 @@ question_list = Template(
             ''' 
             <div class="question">
                 <a href="/$test_name/$question_index">$question_index -> $question_title...</a>
-                <a href="/$test_name/$question_index/delete" style="color:red">delete</a>
+                <a href="/$test_name/$question_index/delete" style="color:red" id="delete">delete</a>
             </div>
             '''
         )
@@ -104,8 +106,9 @@ nav1 = '''
             <meta charset="utf-8">
             <style>
                         body {
+                            width: 70%; 
                             background: #fff;
-                            margin: 0;
+                            margin: 30px auto;
                             padding: 0;
                         }
                         a {
@@ -123,14 +126,14 @@ nav1 = '''
                             border: 1px solid #ccc; 
                         }
                         select {
-                            width: 50%;
+                            width: 70%;
                             padding: 16px 20px;
                             border: none;
                             border-radius: 4px;
                             background-color: #f1f1f1;
                         } 
                         input[type=text] {
-                            width: 50%;
+                            width: 70%;
                             padding: 12px 20px;
                             margin: 8px 0;
                             box-sizing: border-box;
