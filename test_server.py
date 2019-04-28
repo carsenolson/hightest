@@ -131,7 +131,7 @@ class MainHandler(http.server.BaseHTTPRequestHandler):
 
     
 def main():
-    httpd = http.server.HTTPServer(("", 8080), MainHandler)
+    httpd = http.server.HTTPServer(("0.0.0.0", 8080), MainHandler)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
